@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Raalhuge Mart — Maldives Fresh Grocery</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ocean:#0077a8;--deep:#004f6e;--lagoon:#00b4d8;--foam:#e0f7fa;
+  --sand:#fdf6e3;--coral:#f4845f;--coral-dk:#d95f3b;--palm:#2d6a4f;
+  --white:#ffffff;--ink:#0d2b3e;--muted:#6b8fa3;
+  --radius:18px;--shadow:0 6px 28px rgba(0,119,168,0.13);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:var(--sand);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:-1;
+  background:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(0,180,216,0.18) 0%,transparent 70%),
+  radial-gradient(ellipse 60% 30% at 90% 110%,rgba(0,119,168,0.10) 0%,transparent 60%),var(--sand);
+  pointer-events:none;}
+
+/* HEADER */
+header{background:linear-gradient(135deg,var(--deep) 0%,var(--ocean) 100%);position:sticky;top:0;z-index:200;padding:0 32px;height:70px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 3px 20px rgba(0,60,90,0.3);}
+header::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--lagoon),var(--coral),var(--lagoon));background-size:200% 100%;animation:shimmer 3s linear infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.logo{display:flex;flex-direction:column;line-height:1.1;}
+.logo-main{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:700;color:white;letter-spacing:.5px;}
+.logo-dot{color:var(--coral);}
+.logo-sub{font-size:0.63rem;color:rgba(255,255,255,0.55);letter-spacing:2px;text-transform:uppercase;}
+.header-right{display:flex;align-items:center;gap:14px;}
+.search-wrap{position:relative;}
+.search-bar{background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.22);border-radius:40px;padding:8px 18px 8px 38px;color:white;font-size:0.88rem;font-family:'Nunito',sans-serif;width:210px;outline:none;transition:all .2s;}
+.search-bar::placeholder{color:rgba(255,255,255,0.5);}
+.search-bar:focus{background:rgba(255,255,255,0.2);border-color:var(--lagoon);width:240px;}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:0.95rem;pointer-events:none;}
+.cart-btn{background:var(--coral);color:white;border:none;border-radius:40px;padding:9px 20px;font-size:0.92rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .18s;font-family:'Nunito',sans-serif;box-shadow:0 3px 12px rgba(244,132,95,0.4);}
+.cart-btn:hover{background:var(--coral-dk);transform:translateY(-1px);}
+.cart-badge{background:white;color:var(--coral);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;background:linear-gradient(160deg,#004f6e 0%,#0077a8 45%,#00b4d8 100%);padding:60px 40px 90px;display:flex;align-items:center;justify-content:space-between;gap:32px;}
+.hero::before{content:'';position:absolute;bottom:0;left:0;right:0;height:65px;background:var(--sand);clip-path:ellipse(55% 100% at 50% 100%);}
+.hero-text{position:relative;z-index:1;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 16px;color:rgba(255,255,255,0.9);font-size:0.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;}
+.hero-text h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.8rem);color:white;line-height:1.1;max-width:560px;}
+.hero-text h1 em{color:#7dd6f5;font-style:normal;}
+.hero-text p{color:rgba(255,255,255,0.72);margin-top:14px;font-size:1rem;max-width:420px;line-height:1.65;}
+.hero-cta{display:inline-block;margin-top:24px;background:var(--coral);color:white;border:none;border-radius:40px;padding:12px 30px;font-size:0.97rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .18s;text-decoration:none;box-shadow:0 6px 20px rgba(244,132,95,0.45);}
+.hero-cta:hover{background:var(--coral-dk);transform:translateY(-2px);}
+.hero-visual{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;flex-shrink:0;}
+.hero-card{background:rgba(255,255,255,0.13);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.18);border-radius:16px;padding:18px 16px;text-align:center;color:white;animation:float 4s ease-in-out infinite;}
+.hero-card:nth-child(2){animation-delay:.5s;}
+.hero-card:nth-child(3){animation-delay:1s;}
+.hero-card:nth-child(4){animation-delay:1.5s;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.hero-card-icon{font-size:2.4rem;display:block;margin-bottom:6px;}
+.hero-card-label{font-size:0.78rem;font-weight:600;opacity:.85;}
+
+/* SECTION */
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);padding:44px 40px 0;display:flex;align-items:center;gap:14px;}
+.section-title::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--lagoon) 0%,transparent 80%);margin-left:14px;}
+.section-sub{padding:6px 40px 24px;color:var(--muted);font-size:0.95rem;}
+
+/* CATEGORY GRID */
+.category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;padding:0 40px 60px;}
+.cat-card{position:relative;overflow:hidden;border-radius:22px;cursor:pointer;transition:transform .22s,box-shadow .22s;box-shadow:var(--shadow);animation:fadeUp .5s ease both;}
+.cat-card:nth-child(1){animation-delay:.05s;}
+.cat-card:nth-child(2){animation-delay:.10s;}
+.cat-card:nth-child(3){animation-delay:.15s;}
+.cat-card:nth-child(4){animation-delay:.20s;}
+.cat-card:nth-child(5){animation-delay:.25s;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.cat-card:hover{transform:translateY(-7px) scale(1.01);box-shadow:0 16px 48px rgba(0,100,160,0.22);}
+.cat-card-bg{height:200px;display:flex;align-items:center;justify-content:center;font-size:5.5rem;position:relative;}
+.cat-veg .cat-card-bg{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);}
+.cat-dairy .cat-card-bg{background:linear-gradient(135deg,#e1f5fe,#b3e5fc);}
+.cat-meat .cat-card-bg{background:linear-gradient(135deg,#fce4ec,#f8bbd0);}
+.cat-snack .cat-card-bg{background:linear-gradient(135deg,#fff8e1,#ffe082);}
+.cat-elec .cat-card-bg{background:linear-gradient(135deg,#ede7f6,#d1c4e9);}
+.cat-card-body{background:white;padding:18px 20px 20px;}
+.cat-card-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.cat-card-desc{color:var(--muted);font-size:0.85rem;line-height:1.5;margin-bottom:12px;}
+.cat-card-count{display:inline-flex;align-items:center;gap:6px;background:var(--foam);color:var(--ocean);border-radius:20px;padding:4px 12px;font-size:0.8rem;font-weight:700;}
+.cat-card-arrow{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.85);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:transform .18s;}
+.cat-card:hover .cat-card-arrow{transform:translate(3px,-3px);}
+
+/* PRODUCT PAGE */
+#productPage{display:none;}
+.product-page-header{background:linear-gradient(135deg,var(--deep) 0%,var(--ocean) 100%);padding:24px 40px;display:flex;align-items:center;gap:16px;}
+.back-btn{background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.25);color:white;border-radius:40px;padding:8px 18px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;display:flex;align-items:center;gap:6px;}
+.back-btn:hover{background:rgba(255,255,255,0.25);}
+.page-cat-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:white;font-weight:700;}
+.page-cat-icon{font-size:1.8rem;}
+.prod-search-bar-wrap{padding:20px 40px 0;}
+.prod-search-wrap{position:relative;display:inline-block;}
+.prod-search-wrap::before{content:'🔍';position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:0.88rem;pointer-events:none;}
+.prod-search{background:white;border:2px solid #d0eaf5;border-radius:40px;padding:10px 20px 10px 42px;font-size:0.92rem;outline:none;width:300px;font-family:'Nunito',sans-serif;color:var(--ink);transition:border-color .15s;}
+.prod-search:focus{border-color:var(--lagoon);}
+
+/* PRODUCTS GRID */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:18px;padding:20px 40px 60px;}
+.product-card{background:white;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s;animation:fadeUp .35s ease both;}
+.product-card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(0,119,168,0.18);}
+.product-img{height:130px;display:flex;align-items:center;justify-content:center;font-size:3.8rem;position:relative;}
+.cat-veg .product-img{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);}
+.cat-dairy .product-img{background:linear-gradient(135deg,#e1f5fe,#b3e5fc);}
+.cat-meat .product-img{background:linear-gradient(135deg,#fce4ec,#f8bbd0);}
+.cat-snack .product-img{background:linear-gradient(135deg,#fff8e1,#ffe082);}
+.cat-elec .product-img{background:linear-gradient(135deg,#ede7f6,#d1c4e9);}
+.product-info{padding:13px 14px 15px;flex:1;display:flex;flex-direction:column;}
+.product-name{font-weight:700;font-size:0.95rem;margin-bottom:3px;}
+.product-unit{color:var(--muted);font-size:0.8rem;margin-bottom:10px;}
+.product-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:auto;}
+.product-price{font-size:1.05rem;font-weight:800;color:var(--ocean);}
+.product-price .cur{font-size:0.72rem;font-weight:600;opacity:.75;margin-right:1px;}
+.add-btn{background:var(--ocean);color:white;border:none;border-radius:8px;padding:7px 13px;font-size:0.84rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:'Nunito',sans-serif;}
+.add-btn:hover{background:var(--deep);}
+.qty-control{display:flex;align-items:center;gap:6px;}
+.qty-btn{width:28px;height:28px;border-radius:50%;border:none;font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s;font-family:'Nunito',sans-serif;}
+.qty-btn.minus{background:#fde8e2;color:var(--coral);}
+.qty-btn.plus{background:var(--foam);color:var(--ocean);}
+.qty-btn:hover{transform:scale(1.15);}
+.qty-num{font-weight:800;font-size:0.97rem;min-width:20px;text-align:center;}
+
+/* CART */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,30,50,0.4);z-index:300;backdrop-filter:blur(3px);}
+.overlay.open{display:block;}
+.cart-panel{position:fixed;right:0;top:0;bottom:0;width:min(420px,100vw);background:var(--sand);z-index:400;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-10px 0 50px rgba(0,60,100,0.2);}
+.cart-panel.open{transform:translateX(0);}
+.cart-header{background:linear-gradient(135deg,var(--deep),var(--ocean));color:white;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;}
+.cart-header h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;}
+.close-btn{background:rgba(255,255,255,0.15);border:none;color:white;width:34px;height:34px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.close-btn:hover{background:rgba(255,255,255,0.28);}
+.cart-items{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;}
+.cart-empty{text-align:center;margin:auto;color:var(--muted);}
+.cart-empty .empty-icon{font-size:3.5rem;display:block;margin-bottom:12px;}
+.cart-item{background:white;border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:11px;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+.ci-emoji{font-size:2rem;width:42px;text-align:center;}
+.ci-info{flex:1;}
+.ci-name{font-weight:700;font-size:0.9rem;}
+.ci-price{color:var(--muted);font-size:0.8rem;margin-top:2px;}
+.ci-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+.ci-total{font-weight:800;color:var(--ocean);font-size:0.94rem;}
+.ci-remove{background:none;border:none;color:#ccc;cursor:pointer;font-size:0.95rem;transition:color .15s;}
+.ci-remove:hover{color:var(--coral);}
+.cart-footer{padding:16px 18px;background:white;border-top:1px solid #d8eef5;}
+.cart-summary-row{display:flex;justify-content:space-between;font-size:0.93rem;margin-bottom:5px;}
+.cart-summary-row.total{font-weight:800;font-size:1.08rem;color:var(--ocean);border-top:1.5px dashed #bee3f0;padding-top:9px;margin-top:6px;}
+.checkout-btn{width:100%;background:linear-gradient(135deg,var(--ocean),var(--lagoon));color:white;border:none;border-radius:12px;padding:14px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:13px;font-family:'Nunito',sans-serif;transition:all .15s;box-shadow:0 4px 16px rgba(0,119,168,0.35);}
+.checkout-btn:hover{transform:translateY(-1px);}
+.checkout-btn:disabled{background:#b0cdd8;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* ORDER MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,30,50,0.5);z-index:500;backdrop-filter:blur(5px);align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:white;border-radius:26px;padding:38px 34px;width:min(510px,calc(100vw - 28px));max-height:92vh;overflow-y:auto;box-shadow:0 28px 90px rgba(0,0,0,0.22);animation:popIn .24s ease;}
+@keyframes popIn{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:none}}
+.modal-top{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+.modal-top h2{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--ink);}
+.modal p.sub{color:var(--muted);font-size:0.88rem;margin-bottom:22px;}
+.form-group{margin-bottom:15px;}
+.form-group label{display:block;font-weight:700;font-size:0.83rem;margin-bottom:5px;color:var(--ink);letter-spacing:.3px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;border:1.5px solid #c8e4f0;border-radius:10px;padding:11px 14px;font-size:0.93rem;outline:none;font-family:'Nunito',sans-serif;color:var(--ink);transition:border-color .15s;background:#fafeff;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--lagoon);}
+.form-group textarea{resize:vertical;min-height:80px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.order-preview{background:linear-gradient(135deg,#e0f7fa,#b3e5fc);border-radius:12px;padding:14px;margin-bottom:20px;max-height:145px;overflow-y:auto;border:1px solid #7dd6f5;}
+.order-preview h4{font-size:0.82rem;font-weight:800;color:var(--ocean);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;}
+.order-row{display:flex;justify-content:space-between;font-size:0.86rem;padding:3px 0;border-bottom:1px dashed rgba(0,119,168,0.2);}
+.order-row:last-child{border-bottom:none;}
+.modal-actions{display:flex;gap:12px;margin-top:20px;}
+.btn-cancel{flex:1;background:#f0f4f7;color:var(--ink);border:none;border-radius:10px;padding:13px;font-size:0.93rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .15s;}
+.btn-cancel:hover{background:#dde6ec;}
+.btn-place{flex:2;background:linear-gradient(135deg,var(--ocean),var(--lagoon));color:white;border:none;border-radius:10px;padding:13px;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;}
+.btn-place:hover{transform:translateY(-1px);}
+
+/* SUCCESS */
+.success-modal{text-align:center;padding:50px 32px;}
+.success-icon{font-size:4.5rem;display:block;margin-bottom:16px;animation:bounce .5s ease;}
+@keyframes bounce{0%,100%{transform:scale(1)}40%{transform:scale(1.2)}}
+.success-modal h2{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ocean);margin-bottom:10px;}
+.success-modal p{color:var(--muted);line-height:1.65;font-size:0.93rem;}
+.order-id{display:inline-block;background:var(--foam);color:var(--ocean);border-radius:8px;padding:6px 20px;font-weight:800;font-size:1rem;margin:14px 0;border:1.5px solid #7dd6f5;}
+.btn-done{background:linear-gradient(135deg,var(--ocean),var(--lagoon));color:white;border:none;border-radius:10px;padding:13px 42px;font-size:1rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;margin-top:10px;transition:all .15s;}
+.btn-done:hover{transform:translateY(-1px);}
+
+/* TOAST */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--deep);color:white;border-radius:40px;padding:12px 28px;font-size:0.92rem;font-weight:600;z-index:600;transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 8px 32px rgba(0,0,0,0.25);white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* FOOTER */
+footer{background:linear-gradient(135deg,var(--deep),#002d40);color:rgba(255,255,255,0.6);text-align:center;padding:30px;font-size:0.88rem;}
+footer strong{color:#7dd6f5;}
+.footer-deco{font-size:1.4rem;margin-bottom:6px;display:block;}
+
+@media(max-width:700px){
+  .hero{flex-direction:column;padding:36px 20px 80px;}
+  .hero-visual{display:none;}
+  .category-grid,.products-grid{padding-left:18px;padding-right:18px;}
+  .section-title,.section-sub,.product-page-header,.prod-search-bar-wrap{padding-left:18px;padding-right:18px;}
+  header{padding:0 16px;}
+  .search-bar{width:130px;}
+  .form-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-main">Raalhuge<span class="logo-dot">·</span>Mart</span>
+    <span class="logo-sub">Maldives Fresh Grocery</span>
+  </div>
+  <div class="header-right">
+    <div class="search-wrap">
+      <span class="search-icon">&#128269;</span>
+      <input class="search-bar" type="text" id="headerSearch" placeholder="Search products..." oninput="handleHeaderSearch()"/>
+    </div>
+    <button class="cart-btn" onclick="openCart()">
+      &#128722; Cart <span class="cart-badge" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<div id="homePage">
+  <div class="hero">
+    <div class="hero-text">
+      <div class="hero-eyebrow">&#127754; Maldives Fresh Delivery</div>
+      <h1>Your Island <em>Grocery</em><br>Delivered Fresh</h1>
+      <p>From crisp vegetables to fresh seafood — everything your family needs, sourced fresh and delivered fast across Male'.</p>
+      <span class="hero-cta" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Shop by Category &#8595;</span>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card"><span class="hero-card-icon">&#129382;</span><div class="hero-card-label">Fresh Veggies</div></div>
+      <div class="hero-card"><span class="hero-card-icon">&#129371;</span><div class="hero-card-label">Dairy &amp; Eggs</div></div>
+      <div class="hero-card"><span class="hero-card-icon">&#128031;</span><div class="hero-card-label">Fish &amp; Meat</div></div>
+      <div class="hero-card"><span class="hero-card-icon">&#9889;</span><div class="hero-card-label">Electricals</div></div>
+    </div>
+  </div>
+
+  <div id="categories">
+    <div class="section-title">&#127978; Shop by Category</div>
+    <div class="section-sub">Choose a category to browse fresh products</div>
+    <div class="category-grid">
+      <div class="cat-card cat-veg" onclick="openCategory('Vegetables &amp; Fruits')">
+        <div class="cat-card-bg">&#129382;</div>
+        <div class="cat-card-arrow">&#8599;</div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Vegetables &amp; Fruits</div>
+          <div class="cat-card-desc">Farm-fresh local produce, tropical fruits &amp; island greens picked daily.</div>
+          <span class="cat-card-count">&#127807; 8 items</span>
+        </div>
+      </div>
+      <div class="cat-card cat-dairy" onclick="openCategory('Dairy &amp; Eggs')">
+        <div class="cat-card-bg">&#129371;</div>
+        <div class="cat-card-arrow">&#8599;</div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Dairy &amp; Eggs</div>
+          <div class="cat-card-desc">Fresh milk, creamy butter, farm eggs, paneer &amp; quality cheese.</div>
+          <span class="cat-card-count">&#129370; 6 items</span>
+        </div>
+      </div>
+      <div class="cat-card cat-meat" onclick="openCategory('Meat &amp; Fish')">
+        <div class="cat-card-bg">&#128031;</div>
+        <div class="cat-card-arrow">&#8599;</div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Meat &amp; Fish</div>
+          <div class="cat-card-desc">Fresh tuna, prawns, chicken &amp; quality cuts — island seafood at its best.</div>
+          <span class="cat-card-count">&#129408; 6 items</span>
+        </div>
+      </div>
+      <div class="cat-card cat-snack" onclick="openCategory('Packaged &amp; Snacks')">
+        <div class="cat-card-bg">&#127836;</div>
+        <div class="cat-card-arrow">&#8599;</div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Packaged &amp; Snacks</div>
+          <div class="cat-card-desc">Rice, lentils, noodles, oil, biscuits &amp; all pantry essentials.</div>
+          <span class="cat-card-count">&#127834; 8 items</span>
+        </div>
+      </div>
+      <div class="cat-card cat-elec" onclick="openCategory('Electricals')">
+        <div class="cat-card-bg">&#128161;</div>
+        <div class="cat-card-arrow">&#8599;</div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Electricals</div>
+          <div class="cat-card-desc">Batteries, LED bulbs, cables, extension boards &amp; home appliances.</div>
+          <span class="cat-card-count">&#9889; 6 items</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="productPage">
+  <div class="product-page-header">
+    <button class="back-btn" onclick="goHome()">&#8592; Back</button>
+    <span class="page-cat-icon" id="pageCatIcon">&#129382;</span>
+    <span class="page-cat-title" id="pageCatTitle">Category</span>
+  </div>
+  <div class="prod-search-bar-wrap">
+    <div class="prod-search-wrap">
+      <input class="prod-search" type="text" id="prodSearch" placeholder="Search in this category..." oninput="filterProdSearch()"/>
+    </div>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h2>&#128722; Your Cart</h2>
+    <button class="close-btn" onclick="closeCart()">&#10005;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><span class="empty-icon">&#127754;</span><p>Your cart is empty.</p><p style="font-size:0.82rem;margin-top:6px">Add items to get started!</p></div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-summary-row"><span>Subtotal</span><span id="subtotal">MVR 0.00</span></div>
+    <div class="cart-summary-row"><span>Delivery</span><span style="color:var(--palm);font-weight:700">Free</span></div>
+    <div class="cart-summary-row total"><span>Total</span><span id="cartTotal">MVR 0.00</span></div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="openOrderModal()" disabled>Place Order &#8594;</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <div class="modal-top"><span style="font-size:1.8rem">&#128203;</span><h2>Place Your Order</h2></div>
+    <p class="sub">Fill in your details and we'll deliver fresh across Male'.</p>
+    <div class="order-preview" id="orderPreview"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Full Name *</label><input type="text" id="custName" placeholder="e.g. Ahmed Rasheed"/></div>
+      <div class="form-group"><label>Phone Number *</label><input type="tel" id="custPhone" placeholder="e.g. 9123456"/></div>
+    </div>
+    <div class="form-group"><label>Delivery Address *</label><textarea id="custAddress" placeholder="House No., Street, Area, Male'..."></textarea></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Preferred Delivery Time</label>
+        <select id="deliveryTime">
+          <option>Morning (7am - 12pm)</option>
+          <option>Afternoon (12pm - 5pm)</option>
+          <option>Evening (5pm - 9pm)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Payment Method</label>
+        <select id="paymentMethod">
+          <option>Cash on Delivery</option>
+          <option>BML Transfer (on delivery)</option>
+          <option>Card on Delivery</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>Special Instructions (optional)</label><input type="text" id="custNote" placeholder="e.g. Call before delivery, leave at door..."/></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeOrderModal()">Back to Cart</button>
+      <button class="btn-place" onclick="placeOrder()">Confirm Order</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="successModal">
+  <div class="modal success-modal">
+    <span class="success-icon">&#127881;</span>
+    <h2>Order Confirmed!</h2>
+    <p>Shukuriyyaa! Your order has been placed and will be delivered fresh to your door.</p>
+    <div class="order-id" id="orderIdDisplay">#RM00001</div>
+    <p id="successDetails" style="margin-top:4px;"></p>
+    <button class="btn-done" onclick="closeSuccess()">Continue Shopping</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">Added to cart!</div>
+
+<footer>
+  <span class="footer-deco">&#127754;&#127796;&#128032;</span>
+  <strong>Raalhuge Mart</strong><br>
+  <span style="font-size:0.8rem">Your trusted neighbourhood grocery store in Male', Maldives &middot; &copy; 2025</span>
+</footer>
+
+<script>
+const products=[
+  {id:1,name:"Red Apples",cat:"Vegetables & Fruits",emoji:"&#127822;",unit:"Per Kg",price:38},
+  {id:2,name:"Ripe Bananas",cat:"Vegetables & Fruits",emoji:"&#127820;",unit:"Per Dozen",price:14},
+  {id:3,name:"Fresh Tomatoes",cat:"Vegetables & Fruits",emoji:"&#127813;",unit:"Per 500g",price:11},
+  {id:4,name:"Broccoli",cat:"Vegetables & Fruits",emoji:"&#129382;",unit:"Per Piece",price:19},
+  {id:5,name:"Carrots",cat:"Vegetables & Fruits",emoji:"&#129365;",unit:"Per 500g",price:13},
+  {id:6,name:"Fresh Spinach",cat:"Vegetables & Fruits",emoji:"&#129382;",unit:"Per Bunch",price:8},
+  {id:7,name:"Oranges",cat:"Vegetables & Fruits",emoji:"&#127818;",unit:"Per Kg",price:28},
+  {id:8,name:"Sweet Mango",cat:"Vegetables & Fruits",emoji:"&#129381;",unit:"Per Kg",price:35},
+  {id:9,name:"Full Cream Milk",cat:"Dairy & Eggs",emoji:"&#129371;",unit:"1 Litre",price:21},
+  {id:10,name:"Farm Fresh Eggs",cat:"Dairy & Eggs",emoji:"&#129370;",unit:"Per 12 pcs",price:28},
+  {id:11,name:"Salted Butter",cat:"Dairy & Eggs",emoji:"&#129480;",unit:"100g",price:17},
+  {id:12,name:"Paneer",cat:"Dairy & Eggs",emoji:"&#129472;",unit:"200g",price:26},
+  {id:13,name:"Curd / Yogurt",cat:"Dairy & Eggs",emoji:"&#129371;",unit:"400g",price:13},
+  {id:14,name:"Cheese Slices",cat:"Dairy & Eggs",emoji:"&#129472;",unit:"200g Pack",price:30},
+  {id:15,name:"Skipjack Tuna",cat:"Meat & Fish",emoji:"&#128031;",unit:"Per Kg",price:55},
+  {id:16,name:"Chicken Breast",cat:"Meat & Fish",emoji:"&#127831;",unit:"Per 500g",price:58},
+  {id:17,name:"Tiger Prawns",cat:"Meat & Fish",emoji:"&#129408;",unit:"Per 250g",price:85},
+  {id:18,name:"Reef Fish",cat:"Meat & Fish",emoji:"&#128032;",unit:"Per Kg",price:62},
+  {id:19,name:"Whole Chicken",cat:"Meat & Fish",emoji:"&#128020;",unit:"~900g",price:96},
+  {id:20,name:"Salmon Fillet",cat:"Meat & Fish",emoji:"&#127843;",unit:"Per 200g",price:105},
+  {id:21,name:"Snack Chips",cat:"Packaged & Snacks",emoji:"&#127839;",unit:"160g Pack",price:12},
+  {id:22,name:"Basmati Rice 5Kg",cat:"Packaged & Snacks",emoji:"&#127834;",unit:"5 Kg Bag",price:155},
+  {id:23,name:"Instant Noodles",cat:"Packaged & Snacks",emoji:"&#127836;",unit:"Pack of 4",price:21},
+  {id:24,name:"Biscuits",cat:"Packaged & Snacks",emoji:"&#127850;",unit:"200g",price:9},
+  {id:25,name:"Toor Dal",cat:"Packaged & Snacks",emoji:"&#129752;",unit:"Per 500g",price:22},
+  {id:26,name:"Sunflower Oil 1L",cat:"Packaged & Snacks",emoji:"&#129749;",unit:"1 Litre",price:46},
+  {id:27,name:"Sugar 1Kg",cat:"Packaged & Snacks",emoji:"&#127852;",unit:"1 Kg Bag",price:13},
+  {id:28,name:"Whole Wheat Bread",cat:"Packaged & Snacks",emoji:"&#127838;",unit:"Per Loaf",price:16},
+  {id:29,name:"AA Batteries 4pk",cat:"Electricals",emoji:"&#128267;",unit:"Pack of 4",price:26},
+  {id:30,name:"LED Bulb 9W",cat:"Electricals",emoji:"&#128161;",unit:"Per Piece",price:19},
+  {id:31,name:"Extension Board",cat:"Electricals",emoji:"&#128268;",unit:"3-Socket",price:65},
+  {id:32,name:"USB Type-C Cable",cat:"Electricals",emoji:"&#9889;",unit:"1m Cable",price:45},
+  {id:33,name:"Electric Kettle",cat:"Electricals",emoji:"&#9832;",unit:"1L 1000W",price:249},
+  {id:34,name:"LED Night Lamp",cat:"Electricals",emoji:"&#127769;",unit:"0.5W Plug-in",price:46},
+];
+
+const catClass={"Vegetables & Fruits":"cat-veg","Dairy & Eggs":"cat-dairy","Meat & Fish":"cat-meat","Packaged & Snacks":"cat-snack","Electricals":"cat-elec"};
+const catIcons={"Vegetables & Fruits":"&#129382;","Dairy & Eggs":"&#129371;","Meat & Fish":"&#128031;","Packaged & Snacks":"&#127836;","Electricals":"&#9889;"};
+
+let cart={},currentCat='',prodSearchTerm='';
+
+function openCategory(cat){
+  currentCat=cat;prodSearchTerm='';
+  document.getElementById('prodSearch').value='';
+  document.getElementById('pageCatTitle').textContent=cat;
+  document.getElementById('pageCatIcon').innerHTML=catIcons[cat]||'&#127978;';
+  document.getElementById('homePage').style.display='none';
+  document.getElementById('productPage').style.display='block';
+  renderProducts();window.scrollTo({top:0,behavior:'smooth'});
+}
+function goHome(){
+  document.getElementById('productPage').style.display='none';
+  document.getElementById('homePage').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function handleHeaderSearch(){
+  const q=document.getElementById('headerSearch').value.toLowerCase().trim();
+  if(!q)return;
+  const hit=products.find(p=>p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q));
+  if(hit)openCategory(hit.cat);
+}
+
+function renderProducts(){
+  const items=products.filter(p=>p.cat===currentCat&&p.name.toLowerCase().includes(prodSearchTerm));
+  const cls=catClass[currentCat]||'';
+  const grid=document.getElementById('productsGrid');
+  if(!items.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)"><div style="font-size:3rem">&#128269;</div><p style="margin-top:12px">No products found.</p></div>';return;}
+  grid.innerHTML=items.map(p=>{
+    const qty=cart[p.id]?cart[p.id].qty:0;
+    return `<div class="product-card ${cls}">
+      <div class="product-img">${p.emoji}</div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-unit">${p.unit}</div>
+        <div class="product-bottom">
+          <div class="product-price"><span class="cur">MVR </span>${p.price.toFixed(2)}</div>
+          ${qty===0
+            ?`<button class="add-btn" onclick="addToCart(${p.id})">+ Add</button>`
+            :`<div class="qty-control"><button class="qty-btn minus" onclick="changeQty(${p.id},-1)">&#8722;</button><span class="qty-num">${qty}</span><button class="qty-btn plus" onclick="changeQty(${p.id},1)">&#43;</button></div>`}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function filterProdSearch(){prodSearchTerm=document.getElementById('prodSearch').value.toLowerCase();renderProducts();}
+
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  if(!cart[id])cart[id]={...p,qty:1};else cart[id].qty++;
+  updateCartUI();renderProducts();showToast(p.name+' added to cart!');
+}
+function changeQty(id,delta){
+  if(!cart[id])return;cart[id].qty+=delta;
+  if(cart[id].qty<=0)delete cart[id];
+  updateCartUI();renderProducts();
+}
+function removeFromCart(id){delete cart[id];updateCartUI();renderProducts();}
+
+function fmt(n){return'MVR '+n.toFixed(2);}
+
+function updateCartUI(){
+  const items=Object.values(cart);
+  const count=items.reduce((s,i)=>s+i.qty,0);
+  const total=items.reduce((s,i)=>s+i.qty*i.price,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('subtotal').textContent=fmt(total);
+  document.getElementById('cartTotal').textContent=fmt(total);
+  document.getElementById('checkoutBtn').disabled=count===0;
+  const c=document.getElementById('cartItems');
+  if(!items.length){c.innerHTML='<div class="cart-empty"><span class="empty-icon">&#127754;</span><p>Your cart is empty.</p><p style="font-size:0.82rem;margin-top:6px">Add items to get started!</p></div>';return;}
+  c.innerHTML=items.map(i=>`<div class="cart-item">
+    <div class="ci-emoji">${i.emoji}</div>
+    <div class="ci-info"><div class="ci-name">${i.name}</div><div class="ci-price">MVR ${i.price.toFixed(2)} &times; ${i.qty}</div></div>
+    <div class="ci-right">
+      <div class="ci-total">${fmt(i.price*i.qty)}</div>
+      <div class="qty-control" style="gap:4px">
+        <button class="qty-btn minus" style="width:24px;height:24px" onclick="changeQty(${i.id},-1)">&#8722;</button>
+        <span class="qty-num" style="font-size:0.88rem">${i.qty}</span>
+        <button class="qty-btn plus" style="width:24px;height:24px" onclick="changeQty(${i.id},1)">&#43;</button>
+      </div>
+      <button class="ci-remove" onclick="removeFromCart(${i.id})">&#128465;</button>
+    </div>
+  </div>`).join('');
+}
+
+function openCart(){document.getElementById('cartPanel').classList.add('open');document.getElementById('overlay').classList.add('open');}
+function closeCart(){document.getElementById('cartPanel').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
+
+function openOrderModal(){
+  closeCart();
+  const items=Object.values(cart);
+  const total=items.reduce((s,i)=>s+i.qty*i.price,0);
+  document.getElementById('orderPreview').innerHTML=
+    `<h4>Order Summary &mdash; ${items.length} item${items.length>1?'s':''}</h4>`+
+    items.map(i=>`<div class="order-row"><span>${i.emoji} ${i.name} &times; ${i.qty}</span><span>${fmt(i.price*i.qty)}</span></div>`).join('')+
+    `<div class="order-row" style="font-weight:800;color:var(--ocean)"><span>Total</span><span>${fmt(total)}</span></div>`;
+  document.getElementById('orderModal').classList.add('open');
+}
+function closeOrderModal(){document.getElementById('orderModal').classList.remove('open');openCart();}
+
+function placeOrder(){
+  const name=document.getElementById('custName').value.trim();
+  const phone=document.getElementById('custPhone').value.trim();
+  const addr=document.getElementById('custAddress').value.trim();
+  if(!name||!phone||!addr){alert('Please fill in Name, Phone, and Address.');return;}
+  const oid='#RM'+String(Math.floor(10000+Math.random()*90000));
+  document.getElementById('orderIdDisplay').textContent=oid;
+  document.getElementById('successDetails').textContent=
+    'Delivering to '+name+' \u00B7 '+document.getElementById('deliveryTime').value+' \u00B7 '+document.getElementById('paymentMethod').value;
+  document.getElementById('orderModal').classList.remove('open');
+  document.getElementById('successModal').classList.add('open');
+  cart={};updateCartUI();if(currentCat)renderProducts();
+}
+function closeSuccess(){
+  document.getElementById('successModal').classList.remove('open');
+  ['custName','custPhone','custAddress','custNote'].forEach(id=>document.getElementById(id).value='');
+  goHome();
+}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
+}
+</script>
+</body>
+</html>
